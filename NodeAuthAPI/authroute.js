@@ -9,13 +9,14 @@ module.exports = function (dataaccess) {
     //and returns the user if the login is success
     authRouter.post("/login", function (req, res) {
         passport.authenticate('local', function (err, user, info) {
-            req.login(user, function (err) {
-                if (err) {
+
+            req.login(user, function (error) {
+                if (error) {
                     res.status(400);
-                    res.send("Invalid credentials");
+                    res.send("Invalid Credentials");
                 }
                 else {
-                    res.send(user);
+                    res.send({ userId: user._id, userName: user.username });
                 }
             });
         })(req, res);
@@ -35,7 +36,7 @@ module.exports = function (dataaccess) {
                     res.send("Sorry something went wrong");
                 }
                 else {
-                    res.send("User created " + user.userId)
+                    res.send("User created " + user._id)
                 }
             });
         }

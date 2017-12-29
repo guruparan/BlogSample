@@ -11,7 +11,18 @@ module.exports = function (dataaccess) {
     }, function (username, password, done) {
         //used to validate the user against the database
         //Additional steps like encryption can be done here
-        dataaccess.retriveUserByUserName(username, done);
+        dataaccess.retriveUserByUserName(username, function (err, user) {
+            if (user) {
+                if (user.password === password) {
+                    done(null, user);
+                }
+                else {
+                    done(new Error("Invalid Credentials"))
+                }
+            }
+            else {
+                done(new Error("Invalid Username"));
+            }
+        });
     });
-
 };

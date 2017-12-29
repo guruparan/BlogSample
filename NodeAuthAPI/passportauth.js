@@ -16,7 +16,7 @@ module.exports = function (app, dataaccess, strategy) {
 
     //used to store the user in the session when login is successful
     passport.serializeUser(function (user, done) {
-        done(null, user.userId);
+        done(null, user._id);
     });
 
     //used to retrieve the user from the database using the id in the session
